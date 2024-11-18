@@ -14,6 +14,8 @@ namespace Monogame___Time_and_Sound
         Texture2D bombTexture;
         Rectangle bombRect;
         SpriteFont timefont;
+        Texture2D bombImageExpTexture;
+        Rectangle bombImageExpRect;
         SoundEffect explode;
 
         MouseState mouseState;
@@ -33,12 +35,13 @@ namespace Monogame___Time_and_Sound
         }
 
         protected override void Initialize()
-        {
+        {       
             bombRect = new Rectangle(50, 50, 700, 400);
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
             seconds = 0f;
+            bombImageExpRect = new Rectangle(50, 50, 0, 0);
 
             base.Initialize();
         }
@@ -46,6 +49,7 @@ namespace Monogame___Time_and_Sound
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            bombImageExpTexture = Content.Load<Texture2D>("bombImage");
             bombTexture = Content.Load<Texture2D>("bomb");
             timefont = Content.Load<SpriteFont>("TimeFont");
             explode = Content.Load<SoundEffect>("explosion");
@@ -64,8 +68,14 @@ namespace Monogame___Time_and_Sound
             {
                 seconds = 0f;
                 explode.Play();
+                bombImageExpRect.Width = _graphics.PreferredBackBufferWidth;
+                bombImageExpRect.Height = _graphics.PreferredBackBufferHeight;
             }
-
+            if (seconds ==  0)
+            {
+                bombRect
+            }
+                       
 
 
             base.Update(gameTime);
@@ -77,6 +87,7 @@ namespace Monogame___Time_and_Sound
 
             _spriteBatch.Begin();
 
+            _spriteBatch.Draw(bombImageExpTexture, bombImageExpRect, Color.White);
             _spriteBatch.Draw(bombTexture, bombRect, Color.White);
             _spriteBatch.DrawString(timefont, (15 - seconds).ToString("00.0"), new Vector2 (270, 200), Color.Black);
 
