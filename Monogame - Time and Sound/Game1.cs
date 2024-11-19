@@ -23,8 +23,8 @@ namespace Monogame___Time_and_Sound
         float seconds;
 
 
-
         Texture2D pliersTexture;
+        Rectangle pliersRect;
 
 
         public Game1()
@@ -42,6 +42,8 @@ namespace Monogame___Time_and_Sound
             _graphics.ApplyChanges();
             seconds = 0f;
             bombImageExpRect = new Rectangle(50, 50, 0, 0);
+            pliersRect = new Rectangle(50, 50, 0, 0);
+
 
             base.Initialize();
         }
@@ -53,6 +55,7 @@ namespace Monogame___Time_and_Sound
             bombTexture = Content.Load<Texture2D>("bomb");
             timefont = Content.Load<SpriteFont>("TimeFont");
             explode = Content.Load<SoundEffect>("explosion");
+            pliersTexture = Content.Load<Texture2D>("pliers");
         }
 
         protected override void Update(GameTime gameTime)
@@ -71,12 +74,6 @@ namespace Monogame___Time_and_Sound
                 bombImageExpRect.Width = _graphics.PreferredBackBufferWidth;
                 bombImageExpRect.Height = _graphics.PreferredBackBufferHeight;
             }
-            if (seconds ==  0)
-            {
-                bombRect
-            }
-                       
-
 
             base.Update(gameTime);
         }
@@ -87,9 +84,9 @@ namespace Monogame___Time_and_Sound
 
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(bombImageExpTexture, bombImageExpRect, Color.White);
             _spriteBatch.Draw(bombTexture, bombRect, Color.White);
             _spriteBatch.DrawString(timefont, (15 - seconds).ToString("00.0"), new Vector2 (270, 200), Color.Black);
+            _spriteBatch.Draw(bombImageExpTexture, bombImageExpRect, Color.White);
 
 
             _spriteBatch.End();
